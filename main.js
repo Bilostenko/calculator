@@ -10,9 +10,9 @@ for (let i = 0; i < number.length; ++i){
   number[i].addEventListener('click', select)
 }
 /* enter sign */
-for (let i = 0; i < number.length; ++i){
+/* for (let i = 0; i < number.length; ++i){
   sign[i].addEventListener('click', select)
-}
+} */
 function select(){
   inp.value += this.innerHTML
 }
@@ -24,9 +24,9 @@ function mathOperation(){
 } */
 
 /* reset entered data */
-/* reset.addEventListener('click', reset)
-function reset(){
-  inp.reset()
-} */
+reset.addEventListener('click', clear)
+function clear(){
+  inp.value= ""
+}
 
 
