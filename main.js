@@ -10,18 +10,18 @@ for (let i = 0; i < number.length; ++i){
   number[i].addEventListener('click', select)
 }
 /* enter sign */
-/* for (let i = 0; i < number.length; ++i){
+for (let i = 0; i < number.length; ++i){
   sign[i].addEventListener('click', select)
-} */
+}
 function select(){
   inp.value += this.innerHTML
 }
 
 /*get result */
-/* result.addEventListener('click', mathOperation)
-function mathOperation(){
-  inp.value  
-} */
+result.addEventListener('click', mathOperationResult)
+function mathOperationResult(){
+  inp.value = eval(inp.value) 
+}
 
 /* reset entered data */
 reset.addEventListener('click', clear)
