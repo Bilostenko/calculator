@@ -1,32 +1,50 @@
 
-const number = document.querySelectorAll('.number')
-const inp = document.querySelector('.inp')
-const sign = document.querySelectorAll('.sign')
-const result = document.querySelector('.result')
-const reset = document.querySelector('.reset')
-
+const numberBtns = document.querySelectorAll('.number')
+const output = document.querySelector('.inp')
+const signBtns = document.querySelectorAll('.sign')
+const resultBtn = document.querySelector('.result')
+const resetBtn = document.querySelector('.reset')
+output.value = 0
 /* enter number */
-for (let i = 0; i < number.length; ++i){
-  number[i].addEventListener('click', select)
+for (let i = 0; i < numberBtns.length; ++i){
+  numberBtns[i].addEventListener('click', handleNumbers)
 }
 /* enter sign */
-for (let i = 0; i < number.length; ++i){
-  sign[i].addEventListener('click', select)
+for (let j = 0; j < signBtns.length; ++j){
+  signBtns[j].addEventListener('click', handleOperators)
 }
-function select(){
-  inp.value += this.innerHTML
-}
-
 /*get result */
-result.addEventListener('click', mathOperationResult)
+resultBtn.addEventListener('click', mathOperationResult)
 function mathOperationResult(){
-  inp.value = eval(inp.value) 
+  output.value = eval(output.value) 
 }
-
 /* reset entered data */
-reset.addEventListener('click', clear)
+resetBtn.addEventListener('click', clear)
 function clear(){
-  inp.value= ""
+  output.value = 0
 }
 
+function handleOperators(){
+  // different sign&sign ending
+  // same sign&sign ending
+  // number ending
+  // empty input.value
+  if (output.value.at(-1) != "/") { 
+    output.value += this.innerHTML
+  } /* else if (){ 
 
+  } else if (){ 
+
+  } else { // 
+
+  } */
+}
+
+function handleNumbers(){
+  // input.value = 0 - replace 0 by number
+  // input.value != 0 - add number
+  // input.value ends with sign and 0 = replace by number
+/*   if ()
+
+*/
+}
