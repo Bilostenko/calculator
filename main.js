@@ -62,17 +62,27 @@ function clear() {
 }
 
 /* change number to negative number */
-negativeBtn.addEventListener('click', negative)
+// negativeBtn.addEventListener('click', negative)
+// if number is non-positive, do nothing
+// if number is positive, then change it to positive number
+// if number is 0 then do nothing
+// if input is a sign then change it to "-"
 function negative() {
-  if (output.value == 0) {
-    output.value = "-" + this.innerHTML
-  } else if (output.value.endsWith("+") || output.value.endsWith("-") || output.value.endsWith("*") || output.value.endsWith("/")) {
-    output.value += "-" + this.innerHTML
+  const lastNum = output.value.match(/(?<=[^])\d+$/)?.[0];
+  if (lastNum) {
+
+    if (output.value > 0) {
+
+    }
   }
 }
 
 /* perform an action with a % sign */
 percentBtn.addEventListener('click', percent)
+// if 
 function percent() {
-
+  // add percent if: output.value.endsWith(/0-9/g)
+  if (output.value.match(/\d$/)) {
+    output.value += '%'
+  }
 }
