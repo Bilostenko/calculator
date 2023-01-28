@@ -62,46 +62,23 @@ function clear() {
 }
 
 /* change number to negative number */
-negativeBtn.addEventListener('click', negative)
+// negativeBtn.addEventListener('click', negative)
+// if number is non-positive, do nothing
+// if number is positive, then change it to positive number
+// if number is 0 then do nothing
+// if input is a sign then change it to "-"
 function negative() {
-  if (output.value == 0) {
-    output.value = "-" + this.innerHTML
-  } else if (output.value.endsWith("+") || output.value.endsWith("-") || output.value.endsWith("*") || output.value.endsWith("/")) {
-    output.value += "-" + this.innerHTML
+  const lastNum = output.value.match(/(?<=[^])\d+$/)?.[0];
+  if (lastNum) {
+
+    if (output.value > 0) {
+
+    }
   }
 }
 
 /* perform an action with a % sign */
-percentBtn.addEventListener('click', getPercentage)
+percentBtn.addEventListener('click', percent)
+function percent() {
 
-
-function getPercentage() {
-  let referenceInput = output.value;
-  let tempArr = output.value.split('');
-  // if number is negative, remove '-' from input
-  if (referenceInput.split('')[0] == '-') {
-    tempArr.shift();
-    output.value = tempArr.join('')
-  }
-  // get operation sign
-  let currentSign = output.value.match(/[\+|\-|\*|\/]/).join('');
-  let firstNumber = tempArr.slice(0, tempArr.indexOf(currentSign));
-  // if number was negative, retrieve '-' sign
-  if (referenceInput.split('')[0] == '-') {
-    firstNumber.unshift('-');
-  }
-  // split array to get the number after the sign
-  let arr = output.value.split(/[^0-9\.]/);
-  // get the percentage part of the number
-  let secondNumber;
-  if (currentSign == '+' || currentSign == '-') {
-    secondNumber = [...firstNumber];
-    secondNumber.push('\*', arr[arr.length - 1], '\/100');
-    secondNumber = [eval(secondNumber.join(''))];
-  } else {
-    secondNumber = arr[arr.length - 1] / 100;
-    secondNumber = secondNumber.toString();
-  }
-  firstNumber = firstNumber.join('');
-  output.value = firstNumber.concat(currentSign, secondNumber);
 }
