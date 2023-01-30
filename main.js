@@ -1,101 +1,75 @@
+const number = document.querySelectorAll('.number');
+const inp = document.querySelector('.inp');
+const sign  = document.querySelectorAll('.sign');
+const result = document.querySelector('.result');
+const clearBtn = document.getElementById('clear');
+const toggleBtn = document.getElementById('toggleSign');
+const percentBtn = document.getElementById('percent');
+const closeBtn = document.querySelector('.close-btn');
 
-const numberBtns = document.querySelectorAll('.number')
-const output = document.querySelector('.inp')
-const signBtns = document.querySelectorAll('.sign')
-const resultBtn = document.querySelector('.result')
-const resetBtn = document.querySelector('.reset')
-const negativeBtn = document.querySelector('.negative')
-const percentBtn = document.querySelector('.percent')
-output.value = 0
 
-/* enter number */
-for (let i = 0; i < numberBtns.length; ++i) {
-  numberBtns[i].addEventListener('click', handleNumbers)
+// clear input
+clearBtn.addEventListener('click', () => {
+  inp.value = '';
+})
+
+for(let i = 0; i < number.length; i++) {
+  number[i].addEventListener('click', insertValue);
 }
-function handleNumbers() {
-  if (output.value == "0") {
-    output.value = this.innerHTML;
-  } else if (output.value.endsWith("+") || output.value.endsWith("-") || output.value.endsWith("*") || output.value.endsWith("/")) {
-    if (output.value.endsWith("0")) {
-      output.value = output.value.slice(0, -1) + this.innerHTML;
-    } else {
-      output.value += this.innerHTML;
-    }
+
+for(let i = 0; i < sign.length; i++) {
+  sign[i].addEventListener('click', insertValue);
+}
+
+function insertValue() {
+  inp.value += this.innerText;
+}
+
+result.addEventListener('click', getResult);
+
+function getResult() {
+  if (/.+\/0$/.test(inp.value)) {
+   alert("Can't divide by zero"); 
+   inp.value = '';
   } else {
-    output.value += this.innerHTML;
+    inp.value = eval(inp.value);
   }
 }
 
-/* enter sign */
-for (let j = 0; j < signBtns.length; ++j) {
-  signBtns[j].addEventListener('click', handleOperators)
-}
-function handleOperators() {
-  if (!isNaN(output.value.slice(-1)) || output.value === "") {
-    output.value += this.innerHTML;
-  } else if (this.innerHTML === "-" && output.value.slice(-1) === "-") {
-    output.value = output.value.slice(0, -1);
-  } else if (this.innerHTML === "-" && output.value.slice(-1) === "+") {
-    output.value = output.value.slice(0, -1);
-    output.value += this.innerHTML;
-  } else if (this.innerHTML === "+" && output.value.slice(-1) === "+") {
-    output.value = output.value.slice(0, -1);
-  } else if (this.innerHTML === "*" && output.value.slice(-1) === "*") {
-    output.value = output.value.slice(0, -1);
-  } else if (this.innerHTML === "/" && output.value.slice(-1) === "/") {
-    output.value = output.value.slice(0, -1);
-  } else if (this.innerHTML === "%" && output.value.slice(-1) === "%") {
-    output.value = output.value.slice(0, -1);
+// '+/-' button
+toggleBtn.addEventListener('click', changeSign);
+
+function changeSign() {
+  let arr = inp.value.split('')
+  if (arr[0] == '-') {
+    arr.shift();
+  } else {
+    arr.unshift('-');
   }
+  inp.value = arr.join('');
 }
 
-/*get result */
-resultBtn.addEventListener('click', mathOperationResult)
-function mathOperationResult() {
-  output.value = eval(output.value)
-}
+// '%' button
+percentBtn.addEventListener('click', getPercentage)
 
-/* reset entered data */
-resetBtn.addEventListener('click', clear)
-function clear() {
-  output.value = 0
-}
 
-/* change number to negative number */
-// negativeBtn.addEventListener('click', negative)
-// if number is non-positive, do nothing
-// if number is positive, then change it to positive number
-// if number is 0 then do nothing
-// if input is a sign then change it to "-"
-function negative() {
-  const lastNum = output.value.match(/(?<=[^])\d+$/)?.[0];
-  if (lastNum) {
-
-    if (output.value > 0) {
-
-    }
-  }
-}
-
-/* perform an action with a % sign */
-percentBtn.addEventListener('click', percent)
-function percent() {
-  let referenceInput = output.value;
-  let tempArr = output.value.split('');
+function getPercentage() {
+  let referenceInput = inp.value;
+  let tempArr = inp.value.split('');
   // if number is negative, remove '-' from input
   if (referenceInput.split('')[0] == '-') {
     tempArr.shift();
-    output.value = tempArr.join('')
+    inp.value = tempArr.join('')
   }
   // get operation sign
-  let currentSign = output.value.match(/[\+|\-|\*|\/]/).join('');
+  let currentSign = inp.value.match(/[\+|\-|\*|\/]/).join('');
   let firstNumber = tempArr.slice(0, tempArr.indexOf(currentSign));
   // if number was negative, retrieve '-' sign
   if (referenceInput.split('')[0] == '-') {
     firstNumber.unshift('-');
   }
   // split array to get the number after the sign
-  let arr = output.value.split(/[^0-9\.]/);
+  let arr = inp.value.split(/[^0-9\.]/);
   // get the percentage part of the number
   let secondNumber;
   if (currentSign == '+' || currentSign == '-') {
@@ -107,6 +81,60 @@ function percent() {
     secondNumber = secondNumber.toString();
   }
   firstNumber = firstNumber.join('');
-  output.value = firstNumber.concat(currentSign, secondNumber);
+  inp.value = firstNumber.concat(currentSign, secondNumber);
 }
 
+// perfrom only one operation at a time
+sign.forEach((btn) => {
+  btn.addEventListener('click', checkOneOperation);
+  btn.addEventListener('click', checkForTwoSigns);
+})
+
+function checkOneOperation() {
+  let signs = /[\+\-\*\/].+[\+\-\*\/]$/;
+  if (signs.test(inp.value)) {
+    let arr = inp.value.split('');
+    let sign = arr[arr.length - 1];
+    console.log(sign)
+    arr.pop();
+    inp.value = arr.join('');
+    
+    getResult();
+    console.log(inp.value);
+    arr = [inp.value, sign];
+    console.log(arr)
+    inp.value = arr.join('');
+    console.log(inp.value)
+  }
+}
+
+function checkForTwoSigns() {
+  let arr = inp.value.split('');
+  let forbiddenCombos = [
+    ['*', '/'], ['/', '*'], ['-', '+'], ['+', '+'], ['/', '/'], ['*', '-'], ['*', '+'], ['/', '-'], ['+', '*'], ['+', '/'], ['-', '*'], ['-', '/'], ['/', '+']
+  ];
+  for (let i = 0; i < forbiddenCombos.length; i++) {
+    if (arr[arr.length - 2] === forbiddenCombos[i][0] && arr[arr.length - 1] === forbiddenCombos[i][1]) {
+      arr.pop();
+      inp.value = arr.join('');
+    }
+  }
+}
+
+let symbols = /[^0-9\+\-\*\/\.%=]/
+document.body.addEventListener('keydown',function(e) {
+  if (e.key == 'Enter' || e.key == '=') {
+    getResult();
+  } else if (e.key == '%') {
+    // don't enter '%' symbol into input
+    e.preventDefault();
+    getPercentage();
+  } else if(e.key === 'a') {
+    e.preventDefault();
+    inp.value = '';
+  }
+  // prevent entering forbidden symbols
+  else if (symbols.test(e.key) && e.key != 'ArrowLeft' && e.key != 'ArrowRight' && e.key != 'ArrowUp' && e.key != 'ArrowDown' && e.key != 'Backspace' && e.key != 'F5' && e.key != 'Delete') {
+    e.preventDefault();
+  }
+})

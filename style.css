@@ -50,3 +50,7 @@
 .yellow{
   background-color: #f69906 ;
 }
+
+#toggleSign, #percent{
+  background-color: #9f9f9f;
+}
