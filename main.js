@@ -121,20 +121,4 @@ function checkForTwoSigns() {
   }
 }
 
-let symbols = /[^0-9\+\-\*\/\.%=]/
-document.body.addEventListener('keydown',function(e) {
-  if (e.key == 'Enter' || e.key == '=') {
-    getResult();
-  } else if (e.key == '%') {
-    // don't enter '%' symbol into input
-    e.preventDefault();
-    getPercentage();
-  } else if(e.key === 'a') {
-    e.preventDefault();
-    inp.value = '';
-  }
-  // prevent entering forbidden symbols
-  else if (symbols.test(e.key) && e.key != 'ArrowLeft' && e.key != 'ArrowRight' && e.key != 'ArrowUp' && e.key != 'ArrowDown' && e.key != 'Backspace' && e.key != 'F5' && e.key != 'Delete') {
-    e.preventDefault();
-  }
-})
+
