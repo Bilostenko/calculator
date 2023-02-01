@@ -7,7 +7,6 @@ const toggleBtn = document.getElementById('toggleSign');
 const percentBtn = document.getElementById('percent');
 const closeBtn = document.querySelector('.close-btn');
 
-
 // clear input
 clearBtn.addEventListener('click', () => {
   inp.value = '';
@@ -120,5 +119,3 @@ function checkForTwoSigns() {
     }
   }
 }
-
-
