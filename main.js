@@ -11,21 +11,17 @@ const closeBtn = document.querySelector('.close-btn');
 clearBtn.addEventListener('click', () => {
   inp.value = '';
 })
-
 for(let i = 0; i < number.length; i++) {
   number[i].addEventListener('click', insertValue);
 }
-
 for(let i = 0; i < sign.length; i++) {
   sign[i].addEventListener('click', insertValue);
 }
-
 function insertValue() {
   inp.value += this.innerText;
 }
 
 result.addEventListener('click', getResult);
-
 function getResult() {
   if (/.+\/0$/.test(inp.value)) {
    alert("Can't divide by zero"); 
@@ -47,7 +43,7 @@ function changeSign() {
   }
   inp.value = arr.join('');
 }
-
+/* a */
 // '%' button
 percentBtn.addEventListener('click', getPercentage)
 
