@@ -7,7 +7,7 @@ const toggleBtn = document.getElementById('toggleSign');
 const percentBtn = document.getElementById('percent');
 const closeBtn = document.querySelector('.close-btn');
 
-// clear input
+// clear
 clearBtn.addEventListener('click', () => {
   inp.value = '';
 })
@@ -31,7 +31,7 @@ function getResult() {
   }
 }
 
-// '+/-' button
+// +/-
 toggleBtn.addEventListener('click', changeSign);
 
 function changeSign() {
@@ -43,29 +43,29 @@ function changeSign() {
   }
   inp.value = arr.join('');
 }
-/* a */
-// '%' button
+
+// %
 percentBtn.addEventListener('click', getPercentage)
 
 
 function getPercentage() {
   let referenceInput = inp.value;
   let tempArr = inp.value.split('');
-  // if number is negative, remove '-' from input
+
   if (referenceInput.split('')[0] == '-') {
     tempArr.shift();
     inp.value = tempArr.join('')
   }
-  // get operation sign
+
   let currentSign = inp.value.match(/[\+|\-|\*|\/]/).join('');
   let firstNumber = tempArr.slice(0, tempArr.indexOf(currentSign));
-  // if number was negative, retrieve '-' sign
+
   if (referenceInput.split('')[0] == '-') {
     firstNumber.unshift('-');
   }
-  // split array to get the number after the sign
+
   let arr = inp.value.split(/[^0-9\.]/);
-  // get the percentage part of the number
+
   let secondNumber;
   if (currentSign == '+' || currentSign == '-') {
     secondNumber = [...firstNumber];
@@ -79,7 +79,7 @@ function getPercentage() {
   inp.value = firstNumber.concat(currentSign, secondNumber);
 }
 
-// perfrom only one operation at a time
+//only one operation at a time
 sign.forEach((btn) => {
   btn.addEventListener('click', checkOneOperation);
   btn.addEventListener('click', checkForTwoSigns);
